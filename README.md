@@ -1,6 +1,6 @@
 # dig
 
-Minimal three.js sample scene: one rotating cube, no build step.
+Minimal Babylon.js sample scene: one rotating cube on WebGPU, no build step.
 
 ## Run
 
@@ -9,10 +9,14 @@ npm install
 npm start
 ```
 
-Then open the printed `http://localhost:...` address. The import map in
-`index.html` loads three.js from jsDelivr, so the page also runs on any static
-host. `npm install` gives Biome, TypeScript, the local server and the three.js
-types. Keep the version in the import map equal to the one in `package.json`.
+Then open the printed `http://localhost:...` address. `index.html` loads the
+Babylon.js UMD bundle from jsDelivr, so the page also runs on any static host.
+`npm install` gives Biome, TypeScript, the local server and the Babylon.js
+types. Keep the version in `index.html` equal to the one in `package.json`.
+
+`WebGPUEngine.CreateAsync` needs a secure context, so `localhost` over HTTP or
+any HTTPS origin works. It also needs a browser with WebGPU. Babylon.js does
+not fall back to WebGL here.
 
 ## Check
 
@@ -23,9 +27,13 @@ npm run ci
 Runs Biome (lint, format, import and key sorting) and TypeScript in `checkJs`
 mode. There is no build: `index.html` and `main.js` are served as-is.
 
+The bundle puts a `BABYLON` global on the page. `jsconfig.json` lists
+`node_modules/babylonjs/babylon.d.ts` under `files`, which gives that global its
+types. `biome.json` declares the same name under `javascript.globals`.
+
 ## Layout
 
-| File         | Role                                          |
-| ------------ | --------------------------------------------- |
-| `index.html` | Full-viewport canvas, import map, entry point. |
-| `main.js`    | Scene, camera, cube, resize, frame loop.       |
+| File         | Role                                            |
+| ------------ | ----------------------------------------------- |
+| `index.html` | Full-viewport canvas, CDN script, entry point.  |
+| `main.js`    | Engine, scene, camera, light, cube, frame loop. |

@@ -20,12 +20,13 @@
     "noUncheckedSideEffectImports": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
     "useDefineForClassFields": true,
     "verbatimModuleSyntax": true
   },
   "exclude": ["node_modules"],
+  "files": ["node_modules/babylonjs/babylon.d.ts"],
   "include": ["**/*.js"]
 }

@@ -1,16 +1,16 @@
-import {
-  BoxGeometry,
-  Mesh,
-  MeshNormalMaterial,
-  PerspectiveCamera,
+const {
+  ArcRotateCamera,
+  HemisphericLight,
+  MeshBuilder,
   Scene,
-  WebGLRenderer,
-} from "three";
+  Vector3,
+  WebGPUEngine,
+} = BABYLON;
 
-const FIELD_OF_VIEW = 70;
-const NEAR_PLANE = 0.1;
-const FAR_PLANE = 100;
-const CAMERA_DISTANCE = 3;
+const CAMERA_ALPHA = -Math.PI / 2;
+const CAMERA_BETA = 1.2;
+const CAMERA_RADIUS = 4;
+const LIGHT_INTENSITY = 0.7;
 const TURNS_PER_SECOND = 0.1;
 const MILLISECONDS_PER_SECOND = 1000;
 
@@ -19,29 +19,31 @@ if (!(canvas instanceof HTMLCanvasElement)) {
   throw new Error("missing canvas element");
 }
 
-const scene = new Scene();
+const engine = await WebGPUEngine.CreateAsync(canvas);
+const scene = new Scene(engine);
 
-const camera = new PerspectiveCamera(FIELD_OF_VIEW, 1, NEAR_PLANE, FAR_PLANE);
-camera.position.z = CAMERA_DISTANCE;
+const camera = new ArcRotateCamera(
+  "camera",
+  CAMERA_ALPHA,
+  CAMERA_BETA,
+  CAMERA_RADIUS,
+  Vector3.Zero(),
+  scene,
+);
+camera.attachControl(canvas, true);
 
-const cube = new Mesh(new BoxGeometry(), new MeshNormalMaterial());
-scene.add(cube);
+const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+light.intensity = LIGHT_INTENSITY;
 
-const renderer = new WebGLRenderer({ antialias: true, canvas });
+const box = MeshBuilder.CreateBox("box", {}, scene);
 
-const resize = () => {
-  const { clientHeight, clientWidth } = canvas;
-  renderer.setPixelRatio(devicePixelRatio);
-  renderer.setSize(clientWidth, clientHeight, false);
-  camera.aspect = clientWidth / clientHeight;
-  camera.updateProjectionMatrix();
-};
+addEventListener("resize", () => {
+  engine.resize();
+});
 
-const observer = new ResizeObserver(resize);
-observer.observe(canvas);
-
-renderer.setAnimationLoop((time) => {
-  const turns = (time / MILLISECONDS_PER_SECOND) * TURNS_PER_SECOND;
-  cube.rotation.set(turns * Math.PI, turns * 2 * Math.PI, 0);
-  renderer.render(scene, camera);
+engine.runRenderLoop(() => {
+  const turns =
+    (performance.now() / MILLISECONDS_PER_SECOND) * TURNS_PER_SECOND;
+  box.rotation.y = turns * 2 * Math.PI;
+  scene.render();
 });

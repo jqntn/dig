@@ -2,7 +2,7 @@
   "name": "dig",
   "version": "1.0.0",
   "private": true,
-  "description": "Minimal three.js sample scene.",
+  "description": "Minimal Babylon.js sample scene.",
   "license": "MIT",
   "author": "Julien QUENTIN",
   "type": "module",
@@ -15,10 +15,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.12",
-    "@types/three": "^0.185.4",
+    "babylonjs": "^9.25.0",
     "lefthook": "^2.1.12",
     "serve": "^14.2.4",
-    "three": "^0.185.1",
     "typescript": "^7.0.2"
   }
 }
