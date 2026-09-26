@@ -18,3 +18,5 @@ commit-msg:
         head -n 1 "{1}" | grep -qE '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9._/-]+\))?!?: [a-z][^A-Z]*[^.]$'
     - name: subject-length
       run: awk 'NR == 1 { exit length($0) > 72 }' "{1}"
+    - name: subject-only
+      run: awk '/^# -+ >8 -+$/ { exit } /^#/ || /^[[:space:]]*$/ { next } { n++ } END { exit n != 1 }' "{1}"
