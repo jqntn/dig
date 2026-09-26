@@ -2,7 +2,7 @@
   "name": "dig",
   "version": "1.0.0",
   "private": true,
-  "description": "Minimal Babylon.js sample scene.",
+  "description": "dig client",
   "license": "MIT",
   "author": "Julien QUENTIN",
   "type": "module",
