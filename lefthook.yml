@@ -5,7 +5,7 @@ pre-commit:
   jobs:
     - name: biome
       glob: "*.{js,mjs,cjs,jsx,ts,tsx,json,jsonc,css,html}"
-      run: npx biome check --write --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=false {staged_files}
+      run: npx biome check --write --error-on-warnings --no-errors-on-unmatched {staged_files}
       stage_fixed: true
     - name: typecheck
       glob: "*.{js,json}"
