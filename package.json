@@ -7,7 +7,7 @@
   "author": "Julien QUENTIN",
   "type": "module",
   "scripts": {
-    "ci": "biome ci --error-on-warnings && tsc -p jsconfig.json",
+    "ci": "biome ci --error-on-warnings && npm run typecheck && npm test",
     "format": "biome check --write --error-on-warnings",
     "prepare": "lefthook install",
     "start": "npm run format && npm run typecheck && serve",
