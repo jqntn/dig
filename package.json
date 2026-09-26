@@ -11,6 +11,7 @@
     "ci": "biome ci --error-on-warnings && tsc -p jsconfig.json",
     "prepare": "lefthook install",
     "start": "serve",
+    "test": "node --test",
     "typecheck": "tsc -p jsconfig.json"
   },
   "devDependencies": {

@@ -1,3 +1,5 @@
+import { rotationAt } from "./rotation.js";
+
 const {
   ArcRotateCamera,
   HemisphericLight,
@@ -11,8 +13,6 @@ const CAMERA_ALPHA = -Math.PI / 2;
 const CAMERA_BETA = 1.2;
 const CAMERA_RADIUS = 4;
 const LIGHT_INTENSITY = 0.7;
-const TURNS_PER_SECOND = 0.1;
-const MILLISECONDS_PER_SECOND = 1000;
 
 const canvas = document.querySelector("canvas");
 if (!(canvas instanceof HTMLCanvasElement)) {
@@ -42,8 +42,6 @@ addEventListener("resize", () => {
 });
 
 engine.runRenderLoop(() => {
-  const turns =
-    (performance.now() / MILLISECONDS_PER_SECOND) * TURNS_PER_SECOND;
-  box.rotation.y = turns * 2 * Math.PI;
+  box.rotation.y = rotationAt(performance.now());
   scene.render();
 });

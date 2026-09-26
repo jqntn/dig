@@ -22,10 +22,12 @@ not fall back to WebGL here.
 
 ```sh
 npm run ci
+npm test
 ```
 
 Runs Biome (lint, format, import and key sorting) and TypeScript in `checkJs`
-mode. There is no build: `index.html` and `main.js` are served as-is.
+mode. `npm test` runs `*.test.js` with the Node.js test runner. There is no
+build: the JS files are served as-is.
 
 The bundle puts a `BABYLON` global on the page. `jsconfig.json` lists
 `node_modules/babylonjs/babylon.d.ts` under `files`, which gives that global its
@@ -33,7 +35,9 @@ types. `biome.json` declares the same name under `javascript.globals`.
 
 ## Layout
 
-| File         | Role                                            |
-| ------------ | ----------------------------------------------- |
-| `index.html` | Full-viewport canvas, CDN script, entry point.  |
-| `main.js`    | Engine, scene, camera, light, cube, frame loop. |
+| File               | Role                                            |
+| ------------------ | ----------------------------------------------- |
+| `index.html`       | Full-viewport canvas, CDN script, entry point.  |
+| `main.js`          | Engine, scene, camera, light, cube, frame loop. |
+| `rotation.js`      | Cube angle from elapsed time.                   |
+| `rotation.test.js` | Checks for `rotation.js`.                       |
