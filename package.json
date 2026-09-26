@@ -10,7 +10,7 @@
     "check": "biome check --write --error-on-warnings",
     "ci": "biome ci --error-on-warnings && tsc -p jsconfig.json",
     "prepare": "lefthook install",
-    "start": "serve",
+    "start": "npm run check && npm run typecheck && serve",
     "test": "node --test",
     "typecheck": "tsc -p jsconfig.json"
   },
